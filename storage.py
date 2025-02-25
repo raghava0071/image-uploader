@@ -1,4 +1,4 @@
-from google.cloud import datastore, storage
+from google.cloud import storage
 import time
 
 datastore_client = datastore.Client()
