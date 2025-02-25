@@ -1,6 +1,6 @@
 import os
 from flask import Flask, redirect, request, send_file
-from storage import download_file
+from storage import upload_file
 from datetime import datetime
 
 os.makedirs('files', exist_ok = True)
