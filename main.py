@@ -30,7 +30,7 @@ def upload():
     bucket_name = "image-and-json"
     file = request.files['form_file']  
     timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H-%M-%SZ') 
-    new_filename = f"{filename}_{timestamp}{ext}"
+    new_filename = f"{timestamp}_{file.filename}"
     image_path = "./files", new_filename
     file.save(image_path)
     upload_file(bucket_name, image_path) 
