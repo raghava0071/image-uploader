@@ -1,5 +1,6 @@
 import os
 from flask import Flask, redirect, request, send_file
+from storage import download_file
 
 os.makedirs('files', exist_ok = True)
 
@@ -25,9 +26,13 @@ def index():
 
 @app.route('/upload', methods=["POST"])
 def upload():
-    file = request.files['form_file']  # item name must match name in HTML form
-    file.save(os.path.join("./files", file.filename))
-
+    bucket_name = "image-and-json"
+    file = request.files['form_file']  
+    timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H-%M-%SZ') 
+    new_filename = f"{filename}_{timestamp}{ext}"
+    image_path = "./files", new_filename
+    file.save(image_path)
+    upload_file(bucket_name, image_path) 
     return redirect("/")
 
 @app.route('/files')
