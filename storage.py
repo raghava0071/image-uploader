@@ -1,7 +1,7 @@
 from google.cloud import storage
 import time
 
-datastore_client = datastore.Client()
+storage_client = storage.Client()
 
 def get_list_of_files(bucket_name):
     """Lists all the blobs in the bucket."""
