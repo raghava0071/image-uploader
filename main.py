@@ -42,7 +42,7 @@ def list_files():
     files = os.listdir("./files")
     jpegs = []
     for file in files:
-        if file.lower().endswith(".jpeg") or file.lower().endswith(".jpg"):
+        if file.lower().endswith(".jpeg") or file.lower().endswith(".jpg") or file.lower().endswith(".json"):
             jpegs.append(file)
     
     return jpegs
