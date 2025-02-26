@@ -1,4 +1,5 @@
 from google.cloud import storage
+import google.generativeai as genai
 import time
 
 storage_client = storage.Client()
@@ -45,4 +46,39 @@ def download_file(bucket_name, file_name):
     print(f"Public URL: {blob.public_url}")
 
     return
+    
+genai.configure(api_key=os.environ['GEMINI_API'])
+
+generation_config = {
+  "temperature": 1,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_output_tokens": 8192,
+  "response_mime_type": "application/json",
+}
+
+model = genai.GenerativeModel(model_name="gemini-1.5-flash")
+
+PROMPT1 = "describe the image 2 0r 3 lines"
+PROMPT2 = "title for the image keep in 3-4 words"
+
+
+def image_desc_json(path, mime_type="image/jpeg"):
+    file = genai.upload_file(path, mime_type=mime_type)
+    response1 = model.generate_content([file, "\n\n", PROMPT1])
+    description = response1['choices'][0]['text'].strip() 
+    response2 = model.generate_content([file, "\n\n", PROMPT2])
+    title = response2['choices'][0]['text'].strip()
+    image_data = {
+        "title": title,
+        "description": description
+    }
+    output_path = os.path.splitext(path)[0] + "_metadata.json"
+    with open(output_path, 'w') as json_file:
+        json.dump(image_data, json_file, indent=4)
+    
+    
+
+
+
 
