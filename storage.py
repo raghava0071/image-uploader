@@ -68,9 +68,9 @@ PROMPT2 = "title for the image keep in 3-4 words"
 def image_desc_json(bucket_name, image_path):
     file = genai.upload_file(image_path, mime_type="image/jpeg")
     response1 = model.generate_content([file, "\n\n", PROMPT1])
-    description = response1
+    description = response1.text
     response2 = model.generate_content([file, "\n\n", PROMPT2])
-    title = response2
+    title = response2.text
     image_data = {
         "title": title,
         "description": description
