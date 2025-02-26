@@ -1,7 +1,7 @@
 from google.cloud import storage
 import google.generativeai as genai
 import time
-import os 
+import os
 
 storage_client = storage.Client()
 
