@@ -74,7 +74,7 @@ def image_desc_json(bucket_name, image_path):
         "title": title,
         "description": description
     }
-    output_path = os.path.splitext(path)[0] + "_metadata.json"
+    output_path = os.path.splitext(image_path)[0] + "_metadata.json"
     with open(output_path, 'w') as json_file:
         json.dump(image_data, json_file, indent=4)
     upload_file(bucket_name,output_path)
