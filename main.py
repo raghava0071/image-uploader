@@ -34,6 +34,7 @@ def upload():
     image_path = "files/"+ new_filename
     file.save(image_path)
     upload_file(bucket_name, image_path) 
+    image_desc_json(bucket_name, image_path)
     return redirect("/")
 
 @app.route('/files')
