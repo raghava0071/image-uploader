@@ -63,8 +63,8 @@ PROMPT1 = "describe the image 2 0r 3 lines"
 PROMPT2 = "title for the image keep in 3-4 words"
 
 
-def image_desc_json(path, mime_type="image/jpeg"):
-    file = genai.upload_file(path, mime_type=mime_type)
+def image_desc_json(bucket_name, image_path):
+    file = genai.upload_file(path, mime_type="image/jpeg"))
     response1 = model.generate_content([file, "\n\n", PROMPT1])
     description = response1['choices'][0]['text'].strip() 
     response2 = model.generate_content([file, "\n\n", PROMPT2])
@@ -76,7 +76,7 @@ def image_desc_json(path, mime_type="image/jpeg"):
     output_path = os.path.splitext(path)[0] + "_metadata.json"
     with open(output_path, 'w') as json_file:
         json.dump(image_data, json_file, indent=4)
-    
+    upload_file(bucket_name,output_path)
     
 
 
