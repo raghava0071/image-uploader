@@ -61,8 +61,8 @@ generation_config = {
 
 model = genai.GenerativeModel(model_name="gemini-1.5-flash")
 
-PROMPT1 = "describe the image. No other heading only describe"
-PROMPT2 = "title of the image. No other heading only title"
+PROMPT1 = "give description the image. No other headings only text in 10 or 20 words"
+PROMPT2 = "give title for the image. No other headings only one title"
 
 
 def image_desc_json(bucket_name, image_path):
