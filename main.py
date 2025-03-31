@@ -17,7 +17,7 @@ def index():
     <head>
         <style>
             body {
-                background-color: #8DB600;
+                background-color: skyblue;
                 color: white; 
                 font-family: Arial, sans-serif;
             }
