@@ -1,6 +1,6 @@
 import os
 from flask import Flask, redirect, request, send_file,render_template_string
-from storage import upload_file,image_desc_json
+from storage import upload_file,image_desc_json,get_list_of_files,download_file
 from datetime import datetime
 import json
 
@@ -82,15 +82,15 @@ def list_files():
     jpegs = []
     for file in files:
         if file.lower().endswith(".jpeg") or file.lower().endswith(".jpg"):
-            jpegs.append(file)
+            jpegs.append(file.replace("files/",""))
     
     return jpegs
 
 @app.route('/response/<filename>')
 def send_response(filename):
   json_file = filename.replace(".jpg","").replace(".jpeg","")+"_metadata.json"
-  json_path = "./files/" + json_file
-
+  json_path = "files/" + json_file
+  download_file(bucket_name,json_path)
   with open(json_path, 'r') as file:
       json_data = json.load(file)
   page =  f"""
@@ -99,7 +99,7 @@ def send_response(filename):
           .fixed-size {{
             width: 300px;
             height: 300px;
-            object-fit: cover;
+            object-fit: contain;
           }}
     </style>
    <body>
@@ -113,7 +113,9 @@ def send_response(filename):
 
 @app.route('/files/<filename>')
 def get_file(filename):
-  return send_file('./files/'+filename)
+  path = 'files/'+filename
+  download_file(bucket_name,path)
+  return send_file(path)
 
 if __name__ == '__main__':
     app.run(debug=True)
