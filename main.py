@@ -6,6 +6,8 @@ import json
 
 os.makedirs('files', exist_ok = True)
 
+bucket_name = "image-and-json"
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -65,7 +67,6 @@ def index():
 
 @app.route('/upload', methods=["POST"])
 def upload():
-    bucket_name = "image-and-json"
     file = request.files['form_file']  
     timestamp = datetime.utcnow().strftime('%Y-%m-%dT%H-%M-%SZ') 
     new_filename = f"{timestamp}_{file.filename}"
@@ -77,7 +78,7 @@ def upload():
 
 @app.route('/files')
 def list_files():
-    files = os.listdir("./files")
+    files = get_list_of_files(bucket_name)
     jpegs = []
     for file in files:
         if file.lower().endswith(".jpeg") or file.lower().endswith(".jpg"):
